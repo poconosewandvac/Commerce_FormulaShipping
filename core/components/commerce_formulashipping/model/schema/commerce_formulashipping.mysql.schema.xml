@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model package="commerce_formulashipping" baseClass="comSimpleObject" platform="mysql" defaultEngine="MyISAM" version="1.1">
+    <object class="FormulaShippingMethod" extends="comShippingMethod" />
+</model>
