@@ -12,3 +12,9 @@ $_lang['commerce.formulashipping.formula_desc'] = 'The mathematic formula used t
 
 $_lang['commerce_formulashipping.formula_weight_unit'] = 'Formula Weight Unit';
 $_lang['commerce_formulashipping.formula_weight_unit_desc'] = 'Weight unit used in formula.';
+
+$_lang['commerce_formulashipping.formula_max_qty'] = 'Max Item Quantity';
+$_lang['commerce_formulashipping.formula_max_qty_desc'] = 'The maximum amount of items allowed in a shipment (not order) for this shipping method to apply.';
+
+$_lang['commerce_formulashipping.formula_min_qty'] = 'Min Item Quantity';
+$_lang['commerce_formulashipping.formula_min_qty_desc'] = 'The minimum amount of items required in a shipment (not order) for this shipping method to apply.';

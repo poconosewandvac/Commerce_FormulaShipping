@@ -1,6 +1,7 @@
 <?php
 
 use modmore\Commerce\Admin\Widgets\Form\TextField;
+use modmore\Commerce\Admin\Widgets\Form\NumberField;
 use modmore\Commerce\Admin\Widgets\Form\WeightUnitField;
 use modmore\Commerce\Admin\Widgets\Form\Validation\Required;
 use MathParser\StdMathParser;
@@ -51,15 +52,56 @@ class FormulaShippingMethod extends comShippingMethod
         return $parsedPrice;
     }
 
+    public function isAvailableForShipment(comOrderShipment $shipment)
+    {
+        $isAvailable = parent::isAvailableForShipment($shipment);
+
+        // No need to check qty if base checks fail
+        if (!$isAvailable) {
+            return false;
+        }
+
+        $minQty = $this->getProperty('min_qty');
+        $maxQty = $this->getProperty('max_qty');
+        $currentQty = $shipment->get('product_quantity');
+        $this->adapter->log(1, "MIN $minQty : MAX $maxQty");
+
+        // Don't use shipping method if not in allowed quantity
+        if ($minQty && ($minQty > $currentQty))  {
+            return false;
+        }
+        
+        if ($maxQty && ($maxQty < $currentQty)) {
+            return false;
+        }
+
+        return true;
+    }
+
     public function getModelFields()
     {
         $fields = parent::getModelFields();
+
+        $fields[] = new NumberField($this->commerce, [
+            'name' => 'properties[min_qty]',
+            'label' => $this->adapter->lexicon('commerce_formulashipping.formula_min_qty'),
+            'description' => $this->adapter->lexicon('commerce_formulashipping.formula_min_qty_desc'),
+            'value' => $this->getProperty('min_qty'),
+        ]);
+
+        $fields[] = new NumberField($this->commerce, [
+            'name' => 'properties[max_qty]',
+            'label' => $this->adapter->lexicon('commerce_formulashipping.formula_max_qty'),
+            'description' => $this->adapter->lexicon('commerce_formulashipping.formula_max_qty_desc'),
+            'value' => $this->getProperty('max_qty'),
+        ]);
 
         $fields[] = new WeightUnitField($this->commerce, [
             'name' => 'properties[weight_unit]',
             'label' => $this->adapter->lexicon('commerce_formulashipping.formula_weight_unit'),
             'default' => 'kg',
-            'value' => $this->getProperty('weight_unit', $this->commerce->getOption('commerce_formulashipping.formula_weight_unit_desc')),
+            'description' => $this->adapter->lexicon('commerce_formulashipping.formula_weight_unit_desc'),
+            'value' => $this->getProperty('weight_unit'),
         ]);
 
         $fields[] = new TextField($this->commerce, [
@@ -80,7 +122,6 @@ class FormulaShippingMethod extends comShippingMethod
      *
      * @param string $formula
      * @param comOrderShipment $shipment
-     * @param string $weightUnit
      * @return float
      * @throws Exception
      */
