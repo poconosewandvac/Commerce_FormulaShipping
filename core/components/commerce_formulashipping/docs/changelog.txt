@@ -1,5 +1,10 @@
 ++ Formula Shipping for Commerce
 
-++ Released on 4/6/2019
+++ v1.1.0 Released on 4/6/2019
+++++++++++++++++++++++++++
+- Added minimum and maximum quantity availability rules
+- Weight unit description lexicon fix
+
+++ v1.0.0 Released on 4/6/2019
 ++++++++++++++++++++++++++
 - First release

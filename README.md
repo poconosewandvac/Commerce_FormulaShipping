@@ -23,6 +23,10 @@ Inside the math formula, you can use variables which are accessible by putting t
 
 **All price units must be in cents!** Price variables are in cents and price returned must be in cents.
 
-## Math Parser
+### Math Parser
 
 See  https://github.com/mossadal/math-parser for available math parser functionality.
+
+## Availability Constraints
+
+The formula shipping method inherits all availability constraints that standard shipping methods have plus item quantity constraints. This allows setting up shipping methods that are more expensive if X items are in a shipment.
