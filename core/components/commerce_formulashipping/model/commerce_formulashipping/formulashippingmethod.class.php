@@ -64,13 +64,12 @@ class FormulaShippingMethod extends comShippingMethod
         $minQty = $this->getProperty('min_qty');
         $maxQty = $this->getProperty('max_qty');
         $currentQty = $shipment->get('product_quantity');
-        $this->adapter->log(1, "MIN $minQty : MAX $maxQty");
 
         // Don't use shipping method if not in allowed quantity
         if ($minQty && ($minQty > $currentQty))  {
             return false;
         }
-        
+
         if ($maxQty && ($maxQty < $currentQty)) {
             return false;
         }
