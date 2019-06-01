@@ -8,6 +8,16 @@ Allows creation of shipping methods that calculate the cost of shipping with a u
 2. Enable in Commerce Dashboard -> Configuration -> Modules
 3. Create "Formula Shipping Method" shipping method in Commerce Dashboard -> Configuration -> Shipping Methods
 
+## Example Formulas
+
+Add an additional $5 fee per item in the shipment on top of the base fee:
+
+`[base_fee]+([qty]*500)`
+
+Add an additional $2 for each weight unit in the shipment:
+
+`[weight]*200`
+
 ## Variables
 
 Inside the math formula, you can use variables which are accessible by putting the variable name between square brackets (ex. [qty]). These variables are dynamically entered when the shipping method cost is calculated.
